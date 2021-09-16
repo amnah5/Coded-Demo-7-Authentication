@@ -14,8 +14,11 @@ class CourseStore {
 
   createCourse = async (course) => {
     try {
-      const res = await axios.post('http://localhost:8000/courses', course);
-      this.courses.push(course);
+      const res = await axios.post(
+        'https://demo-7-authentication-be.herokuapp.com/courses',
+        course
+      );
+      this.courses.push(res.data);
     } catch (error) {
       console.log('CoursesStore -> createCourse -> error', error);
     }
@@ -23,7 +26,9 @@ class CourseStore {
 
   fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/courses');
+      const response = await axios.get(
+        'https://demo-7-authentication-be.herokuapp.com/courses'
+      );
       this.courses = response.data;
     } catch (error) {
       console.error('CoursesStore -> fetchCourses -> error', error);
