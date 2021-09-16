@@ -1,6 +1,5 @@
 import { makeObservable, observable, action } from 'mobx';
-import axios from 'axios';
-
+import instance from './instance';
 class CourseStore {
   courses = [];
 
@@ -14,8 +13,8 @@ class CourseStore {
 
   createCourse = async (course) => {
     try {
-      const res = await axios.post('http://localhost:8000/courses', course);
-      this.courses.push(course);
+      const res = await instance.post('/courses', course);
+      this.courses.push(res.data);
     } catch (error) {
       console.log('CoursesStore -> createCourse -> error', error);
     }
@@ -23,7 +22,7 @@ class CourseStore {
 
   fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/courses');
+      const response = await instance.get('/courses');
       this.courses = response.data;
     } catch (error) {
       console.error('CoursesStore -> fetchCourses -> error', error);
