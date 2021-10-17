@@ -1,37 +1,28 @@
-import { makeObservable, observable, action } from 'mobx';
-import axios from 'axios';
+import { makeAutoObservable } from "mobx";
+import api from "./api";
 
 class CourseStore {
   courses = [];
 
   constructor() {
-    makeObservable(this, {
-      courses: observable,
-      createCourse: action,
-      fetchCourses: action,
-    });
+    makeAutoObservable(this, {});
   }
 
   createCourse = async (course) => {
     try {
-      const res = await axios.post(
-        'https://demo-7-authentication-be.herokuapp.com/courses',
-        course
-      );
+      const res = await api.post("/courses", course);
       this.courses.push(res.data);
     } catch (error) {
-      console.log('CoursesStore -> createCourse -> error', error);
+      console.log("CoursesStore -> createCourse -> error", error);
     }
   };
 
   fetchCourses = async () => {
     try {
-      const response = await axios.get(
-        'https://demo-7-authentication-be.herokuapp.com/courses'
-      );
+      const response = await api.get("/courses");
       this.courses = response.data;
     } catch (error) {
-      console.error('CoursesStore -> fetchCourses -> error', error);
+      console.error("CoursesStore -> fetchCourses -> error", error);
     }
   };
 }

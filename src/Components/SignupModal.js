@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import courseStore from "../stores/courseStore";
+import { Form, Modal, Button } from "react-bootstrap";
+import authStore from "../stores/authStore";
 
-export default function AddCourseModal(props) {
-  const [course, setCourse] = useState({
-    title: "",
-    image: "",
+export default function SignupModal(props) {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
   });
   const handleChange = (event) => {
-    setCourse({ ...course, [event.target.name]: event.target.value });
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    courseStore.createCourse(course);
+    props.signIn
+      ? authStore.logging(user, "signIn")
+      : authStore.logging(user, "signUp");
     props.closeModal();
   };
   return (
@@ -24,35 +26,34 @@ export default function AddCourseModal(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Add Course</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Signup</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Course title</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
               onChange={handleChange}
-              name="title"
-              placeholder="Enter course title"
+              name="username"
+              placeholder="Enter your username"
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Image url</Form.Label>
+            <Form.Label>Password</Form.Label>
             <Form.Control
-              type="text"
+              type="password"
               onChange={handleChange}
-              name="image"
-              placeholder="Enter image url"
+              name="password"
+              placeholder="Enter your password"
             />
           </Form.Group>
         </Form>
-        <p>only registered users can create courses</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="warning" onClick={handleSubmit}>
-          Add Course
+          {props.signIn ? "Sign in" : "Sign up"}
         </Button>
         <Button variant="warning" onClick={props.closeModal}>
           Close

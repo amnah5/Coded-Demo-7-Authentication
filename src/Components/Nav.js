@@ -1,7 +1,15 @@
-import React from 'react';
-import logo from '../assets/images/logo.svg';
-import { Link, NavLink } from 'react-router-dom';
-export default function Nav() {
+import React, { useState } from "react";
+import logo from "../assets/images/logo.svg";
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import SignupModal from "./SignupModal";
+import authStore from "../stores/authStore";
+import { observer } from "mobx-react";
+
+function Nav() {
+  const [signupIsOpen, setSignupIsOpen] = useState(false);
+  const [signIn, setSignIn] = useState(false);
+
   return (
     <>
       <header class="header_area">
@@ -37,6 +45,47 @@ export default function Nav() {
                       <li class="nav-item">
                         <NavLink to="/courses">Courses</NavLink>
                       </li>
+
+                      {authStore.user ? (
+                        <>
+                          <li class="nav-item">
+                            Hello {authStore.user.username}
+                          </li>
+                          <li class="nav-item">
+                            <Button onClick={() => authStore.logout()}>
+                              Logout
+                            </Button>{" "}
+                          </li>
+                        </>
+                      ) : (
+                        <>
+                          <li class="nav-item">
+                            <Button
+                              onClick={() => {
+                                setSignupIsOpen(true);
+                                setSignIn(false);
+                              }}
+                            >
+                              Sign up
+                            </Button>
+                          </li>
+                          <li>
+                            <Button
+                              onClick={() => {
+                                setSignupIsOpen(true);
+                                setSignIn(true);
+                              }}
+                            >
+                              Sign in
+                            </Button>
+                            <SignupModal
+                              signIn={signIn}
+                              closeModal={() => setSignupIsOpen(false)}
+                              isOpen={signupIsOpen}
+                            />
+                          </li>
+                        </>
+                      )}
                     </ul>
                   </div>
                 </nav>
@@ -48,3 +97,5 @@ export default function Nav() {
     </>
   );
 }
+
+export default observer(Nav);
