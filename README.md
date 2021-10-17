@@ -32,13 +32,17 @@ post /signin , signin
 4. `import axios from "axios";`
 5. create user= null
 6. constructor
-7. sign up , test it 
-8. lets put all axios in one place 
-9. create instance and import it in course and auth stores
-10. we see token , i need to save it and send it all the time with the next api
-11. `yarn add jwt-decode`
-12. create set user method 
-13. go to nav check for a user to show sign out instead of in
+7. sign up , test it , refresh => lose all data
+8. we need to check for token 
+10. lets put all axios in one place 
+11. create instance and import it in course and auth stores
+12. create course => bad 401 
+13. we see token , i need to save it and send it all the time with the next api 
+14. ` instance.defaults.headers.common.Authorization = `Bearer ${token}`;`
+15. create course 
+16. sign in 
+17. create set user method 
+
 
 
 ## Instructor Notes
