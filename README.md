@@ -26,35 +26,20 @@ post /signin , signin
 
 ## Steps
 
-1- Create Signin/Signup buttons in Navbar with thier modals
-<br/>
-2- Create Forms with username and password fields
-<br/>
-3- Create authStore and a signup method
-<br/>
-4- Create handleSubmit method with authStore.signup
-<br/>
-5- Create instance.js in authStore, import it and use it in authStore and courseStore
-<br/>
-6- Create sign in method and use it in the modal
-<br/>
-7- Install jwt-decode and use it in authStore
-<br/>
-8- Create user state in authStore and set the inital value to null
-<br/>
-9- Import authStore in Navbar and create a condition to check for a user and change the buttons to welcome + username and change nav to observable
-<br/>
-10- Do the same in CoursesList for the add course button
-<br/>
-11- Create setUser function in authStore and set the headers
-<br/>
-12- Create Signout method in authStore and button in navbar
-<br/>
-13- Save the token in localStorage in setUser method
-<br/>
-14- Create the checkForToken method that compares the exp date and call it
-<br/>
-15- Remove the token from localStorage in the signout method
+1. explore the code/app
+2. Create authStore and a signup method
+3. `import { observable, makeAutoObservable, action } from 'mobx';`
+4. `import axios from "axios";`
+5. create user= null
+6. constructor
+7. sign up , test it 
+8. lets put all axios in one place 
+9. create instance and import it in course and auth stores
+10. we see token , i need to save it and send it all the time with the next api
+11. `yarn add jwt-decode`
+12. create set user method 
+13. go to nav check for a user to show sign out instead of in
+
 
 ## Instructor Notes
 
